@@ -22,6 +22,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            background-attachment: fixed; /* Hace que la imagen de fondo cubra toda la página incluso si es muy larga */
         }
         
         .container {
@@ -336,7 +337,7 @@
             var emailObj = document.forms['zsWebToCase_1095985000000458061']['Email'];
             if(emailObj && !isError) {
                 if(emailObj.value.trim() !== '' && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(emailObj.value))) {
-                    alert('Por favor, introduce una dirección de Email válida');
+                    alert('Please enter a valid email address.');
                     emailObj.focus();
                     isError = true;
                 }
@@ -444,7 +445,7 @@
                         <!-- File Attachment Field -->
                         <div class="mb-3">
                             <label for="zsattachment_1" class="form-label">Attachments (optional)</label>
-                            <input type="file" class="form-control" id="zsattachment_1" name="attachment_1"
+                            <input type="file" class="form-control" id="zsattachment_1" name="attachment_1" lang="en"
                                    onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
                             
                             <input type="file" class="d-none" name="attachment_2" id="zsattachment_2"
