@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Meta and Styling -->
+    <META HTTP-EQUIV='content-type' CONTENT='text/html; charset=UTF-8'>
+        <title>Soporte Académico - Blackwell University</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Core Styles -->
+    <style>
+
+html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Source Serif 4', serif;
+        }
+        
+        .container {
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container-form {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: row;
+            height: auto;
+        }
+
+        .info-box {
+            background: linear-gradient(to bottom, #0056b3, #003b80);
+            padding: 50px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: left;
+            position: relative;
+            width: 40%;
+            border-radius: 12px 0 0 12px;
+        }
+
+
+        .info-box h2 {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .form-container {
+            width: 60%;
+            padding: 40px;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #003366;
+            border: none;
+            font-size: 18px;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .btn-primary:hover {
+            background-color: #002855;
+        }
+
+
+        .form-container {
+            flex: 2;
+            padding: 30px;
+            box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 0 10px 10px 0;
+        }
+        
+        
+        .form-header {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 15px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #004aad, #0073e6);
+            border: none;
+            font-size: 18px;
+            padding: 12px 40px; /* Aumenta el ancho */
+            border-radius: 8px;
+            width: auto;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(to right, #003b80, #0056b3);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            font-size: 18px;
+            padding: 12px 12px;
+            border-radius: 8px;
+            width: auto;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        
+        .mandatory-field {
+            border-left: 3px solid #ff6448 !important;
+        }
+        
+        #zsFileBrowseAttachments {
+            clear: both;
+            margin: 10px 0;
+        }
+        
+        .file-info {
+            font-size: 12px;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        
+        .upload-btn {
+            color: #0d6efd;
+            cursor: pointer;
+        }
+        
+        .form-footer {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #6c757d;
+        }
+        
+        .form-footer img {
+            max-width: 16px;
+            max-height: 16px;
+            margin-left: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                height: auto;
+                align-items: flex-start;
+                padding: 10px;
+            }
+            .container-form {
+                flex-direction: column;
+                overflow: visible;
+            }
+            .info-box {
+                width: 100%;
+                order: -1;
+                border-radius: 10px 10px 0 0;
+                padding: 30px;
+                align-items: center;
+                text-align: center;
+            }
+            .form-container {
+                width: 100%;
+                border-radius: 0 0 10px 10px;
+                padding: 30px;
+            }
+        }
+    </style>
+    
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src='https://d17nz991552y2g.cloudfront.net/app/js/jqueryandencoder.ef05974972bf3bca1b87.js'></script>
+    
+    <!-- Form Logic Script -->
+    <script>
+        // Form Dependency Fields Functions
+        function trimBoth(str) {
+            return jQuery.trim(str);
+        }
+        
+        function setAllDependancyFieldsMapping() {
+            var mapDependancyLabels = getMapDependenySelectValues(jQuery("[id='property(module)']").val(), "JSON_MAP_DEP_LABELS");
+            if (mapDependancyLabels) {
+                for (var i = 0; i < mapDependancyLabels.length; i++) {
+                    var label = mapDependancyLabels[i];
+                    var obj = document.forms['zsWebToCase_1095985000000458013'][label];
+                    if (obj) {
+                        setDependent(obj, true);
+                    }
+                }
+            }
+        }
+        
+        // Form initialization on document ready
+        document.addEventListener('readystatechange', function() {
+            if (document.readyState === 'complete' && window.zsRegenerateCaptcha) {
+                zsRegenerateCaptcha();
+            }
+            setAllDependancyFieldsMapping();
+            document.getElementById('zsSubmitButton_1095985000000458013').removeAttribute('disabled');
+            zsAttachedAttachmentsCount = 0;
+            zsAttachmentFileBrowserIdsList = [1, 2, 3, 4, 5];
+            jQuery('#zsFileBrowseAttachments').html('');
+        });
+        
+        // Form Reset Function
+        function zsResetWebForm(webFormId) {
+            document.forms['zsWebToCase_' + webFormId].reset();
+            document.getElementById('zsSubmitButton_1095985000000458013').removeAttribute('disabled');
+            setAllDependancyFieldsMapping();
+            zsAttachedAttachmentsCount = 0;
+            zsAttachmentFileBrowserIdsList = [1, 2, 3, 4, 5];
+            jQuery('#zsFileBrowseAttachments').html('');
+            zsCloudPickerJSON = {};
+            if (document.forms['zsWebToCase_1095985000000458013']['zsCloudPickerAttachments'] != undefined) {
+                document.forms['zsWebToCase_1095985000000458013']['zsCloudPickerAttachments'].value = JSON.stringify({});
+            }
+            zsRearrangeFileBrowseAttachments();
+            zsChangeMousePointer();
+        }
+        
+        // File attachment handling functions
+        function zsOpenFileBrowseAttachment(event) {
+            if(event.target.value != ""){
+                var fileInput = event.target;
+                var clickedElement = event.target;
+                var parentElement = clickedElement.parentNode;
+                var fileContents = parentElement.innerHTML;
+                var elemArr = fileContents.split('input');
+                var fileInputStr = elemArr[1].split('>')[0]+'/>';
+                var newStr = "<input" + fileInputStr;
+                parentElement.innerHTML = newStr;
+            }
+        }
+        
+        function zsRenderBrowseFileAttachment(fileName, loadingObject) {
+            var fileBrowserId = loadingObject.id;
+            var fileNames = fileName.split('\\');
+            var fileName = fileNames[fileNames.length - 1];
+            var fileId = fileBrowserId + '_' + fileName;
+            var fileObj = jQuery('<div class="filenamecls mt-2" id="file_'+fileBrowserId+'_'+fileName+'">'+ fileName +'<span class="closefunction ms-2 me-4"><img src="https://d1ydxa2xvtn0b5.cloudfront.net/app/images/linkClose.png" /></span></div>');
+            
+            jQuery('#zsFileBrowseAttachments').append(fileObj); 
+            var closeImageObj =  jQuery('#file_'+fileBrowserId+'_'+fileName+' span');
+            var fileAttachId = fileName;
+            
+            closeImageObj.on('click', function() {
+                zsRemoveFileAttachment(this, fileBrowserId);
+            });
+            
+            // Show next file input
+            var nextId = parseInt(fileBrowserId.substring(13)) + 1;
+            jQuery('#zsattachment_'+nextId).show();
+            
+            if(zsAttachedAttachmentsCount >= 5) {
+                jQuery('#zsMaxLimitMessage').show();
+            }
+        }
+        
+        function zsRemoveFileAttachment(obj, fileBrowserId) {
+            var fileAttachmentId = jQuery(obj).parent().attr('id').split('_')[2];
+            jQuery(obj).parent().remove();
+            var fileInput = document.getElementById('zsattachment_'+fileBrowserId);
+            fileInput.value = '';
+            fileInput.style = 'display: block;';
+            zsAttachedAttachmentsCount--;
+            jQuery('#zsMaxLimitMessage').hide();
+            zsRearrangeFileBrowseAttachments();
+            zsChangeMousePointer();
+        }
+        
+        function zsRearrangeFileBrowseAttachments() {
+            jQuery.each(jQuery('div[id^=file]'), function( index, value ) {
+                var attachmentId = jQuery(value).attr('id').split('_')[1];
+                var count = index + 1;
+                jQuery(value).attr('id', 'file_'+count+'_'+attachmentId);
+            });
+        }
+        
+        function zsChangeMousePointer() {
+            if (zsAttachedAttachmentsCount >= 5) {
+                jQuery('#zsBrowseAttachment').css('cursor', 'default');
+            } else {
+                jQuery('#zsBrowseAttachment').css('cursor', 'pointer');
+            }
+        }
+        
+        // Validation function
+        function zsValidateMandatoryFields() {
+            var mandatoryFields = ['Contact Name', 'Email', 'Subject'];
+            var fieldLabels = {'Contact Name': 'Apellidos', 'Email': 'Email', 'Subject': 'Asunto'};
+            var isError = false;
+            
+            for(var i = 0; i < mandatoryFields.length; i++) {
+                var fieldObj = document.forms['zsWebToCase_1095985000000458013'][mandatoryFields[i]];
+                if(fieldObj) {
+                    if(fieldObj.value.trim() === '') {
+                        alert(fieldLabels[mandatoryFields[i]] + ' no puede estar vacío');
+                        fieldObj.focus();
+                        isError = true;
+                        break;
+                    }
+                }
+            }
+            
+            // Email validation
+            var emailObj = document.forms['zsWebToCase_1095985000000458013']['Email'];
+            if(emailObj && !isError) {
+                if(emailObj.value.trim() !== '' && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(emailObj.value))) {
+                    alert('Por favor, introduce una dirección de Email válida');
+                    emailObj.focus();
+                    isError = true;
+                }
+            }
+            
+            return !isError;
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Main Form Container -->
+    <div class="container">
+        <div class="container-form row">
+            <!-- Columna de información -->
+            <div class="col-md-4 info-box">
+                <img src="https://cdn.bitrix24.es/b15495391/landing/d83/d8337f03f6e3aaff5c6df748f7fc5593/logo_bgu_1x.png" alt="Logo BGU">
+                <br>
+                <h5>Student Support</h5>
+                <p>If you have any questions or problems, complete the following form and our team will contact you.</p>
+            </div>
+             <!-- Columna del formulario -->
+             <div class="col-md-8 form-container">
+                    <form name='zsWebToCase_1095985000000458013' id='zsWebToCase_1095985000000458013' 
+                          action='https://desk.zoho.com/support/WebToCase' method='POST' 
+                          onSubmit='return zsValidateMandatoryFields()' enctype='multipart/form-data'>
+                        
+                        <!-- Hidden Fields -->
+                        <input type='hidden' name='xnQsjsdp' value='edbsn26679f3fa8c1d6c53c56627a48990e9d'/>
+                        <input type='hidden' name='xmIwtLD' value='edbsne2ce20582c8f950db92e389e37cf5fa3e04c3a66910d31a0e8cf26ceabaa1c37'/>
+                        <input type='hidden' name='xJdfEaS' value=''/>
+                        <input type='hidden' name='actionType' value='Q2FzZXM='/>
+                        <input type="hidden" id="property(module)" value="Cases"/>
+                        <input type="hidden" id="dependent_field_values_Cases" 
+                               value="&#x7b;&quot;JSON_VALUES&quot;&#x3a;&#x7b;&#x7d;,&quot;JSON_SELECT_VALUES&quot;&#x3a;&#x7b;&#x7d;,&quot;JSON_MAP_DEP_LABELS&quot;&#x3a;&#x5b;&#x5d;&#x7d;"/>
+                       <input type='hidden' name='returnURL' value='https&#x3a;&#x2f;&#x2f;blackwell-university.github.io&#x2f;ticket-zoho&#x2f;'/>
+                        
+                        <!-- Form Header -->
+                        <div class="form-header">
+                            <h3 class="text-left"><strong>Make your request</strong></strong></h3>
+                        </div>
+                        
+                        <!-- First Name y Apellido en una fila -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="firstName" class="col-form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstName" name="First Name" maxlength="120" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lastName" class="col-form-label">Last Name*</label>
+                                <input type="text" class="form-control" id="lastName" name="Contact Name" maxlength="120" required>
+                            </div>
+                        </div>
+
+                        <!-- Correo y Teléfono en una fila -->
+                        <div class="row mb-3">
+                            <div class="col-md-7">
+                                <label for="email" class="col-form-label">Email *</label>
+                                <input type="email" class="form-control" id="email" name="Email" maxlength="120" required>
+                            </div>
+                            <div class="col-md-5">
+                                <label for="phone" class="col-form-label">Número de teléfono</label>
+                                <input type="tel" class="form-control" id="phone" name="Phone" maxlength="120">
+                            </div>
+                        </div>
+                        <!-- Form Fields --
+                        <div class="mb-3 row">
+                            <label for="firstName" class="col-sm-3 col-form-label">First Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="firstName" name="First Name" maxlength="120">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 row">
+                            <label for="lastName" class="col-sm-3 col-form-label">Last Name*</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control mandatory-field" id="lastName" name="Contact Name" maxlength="120" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 row">
+                            <label for="email" class="col-sm-3 col-form-label">Email *</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control mandatory-field" id="email" name="Email" maxlength="120" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 row">
+                            <label for="phone" class="col-sm-3 col-form-label">Número de teléfono</label>
+                            <div class="col-sm-9">
+                                <input type="tel" class="form-control" id="phone" name="Phone" maxlength="120">
+                            </div>
+                        </div>-->
+                        
+                        <div class="mb-3 ">
+                            <label for="subject" class="col-form-label">Subject*</label>
+                            <input type="text" class="form-control mandatory-field" id="subject" name="Subject" maxlength="255" required>
+                        </div>
+                        
+                        <div class="mb-3 ">
+                            <label for="description" class=" col-form-label">Description</label>
+                            <textarea class="form-control" id="description" name="Description" rows="5" maxlength="3000"></textarea>
+                        </div>
+
+                        <!-- File Attachment Field -->
+<!-- File Attachment Field -->
+<div class="mb-3">
+    <label for="zsattachment_1" class="form-label">Attached</label>
+    <input type="file" class="form-control" id="zsattachment_1" name="attachment_1"
+           onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
+    
+    <input type="file" class="d-none" name="attachment_2" id="zsattachment_2"
+           onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
+    <input type="file" class="d-none" name="attachment_3" id="zsattachment_3"
+           onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
+    <input type="file" class="d-none" name="attachment_4" id="zsattachment_4"
+           onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
+    <input type="file" class="d-none" name="attachment_5" id="zsattachment_5"
+           onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
+
+    <div id="zsFileBrowseAttachments" class="mt-2"></div>
+    
+    <small class="text-muted">Each file can be up to 20 MB in size.</small>
+    <div id="zsMaxLimitMessage" class="text-danger" style="display: none;">
+        Puede adjuntar un máximo de 5 archivos a la vez.
+    </div>
+</div>
+
+
+                        
+                         <!-- Attacheds --
+                        <div class="mb-3">
+                            <label for="attachment" class="form-label">Attached</label>
+                            <input type="file" class="form-control" name="attachment_1">
+                            <small class="text-muted">Each file can be up to 20 MB in size.</small>
+                        </div>-->
+                        <!-- File Attachment Field --
+                        <div class="mb-3 row">
+                            <label for="attachment" class="col-sm-3 col-form-label">Attached</label>
+                            <div class="col-sm-9">
+                                <span class="upload-btn" id="zsBrowseAttachment">Adjuntar archivos</span>
+                                <input class="d-none" type='file' name='attachment_1' id='zsattachment_1' 
+                                       onclick='zsOpenFileBrowseAttachment(event)' onchange='zsRenderBrowseFileAttachment(this.value, this)'/>
+                                <input class="d-none" type='file' name='attachment_2' id='zsattachment_2' 
+                                       onclick='zsOpenFileBrowseAttachment(event)' onchange='zsRenderBrowseFileAttachment(this.value, this)'/>
+                                <input class="d-none" type='file' name='attachment_3' id='zsattachment_3' 
+                                       onclick='zsOpenFileBrowseAttachment(event)' onchange='zsRenderBrowseFileAttachment(this.value, this)'/>
+                                <input class="d-none" type='file' name='attachment_4' id='zsattachment_4' 
+                                       onclick='zsOpenFileBrowseAttachment(event)' onchange='zsRenderBrowseFileAttachment(this.value, this)'/>
+                                <input class="d-none" type='file' name='attachment_5' id='zsattachment_5' 
+                                       onclick='zsOpenFileBrowseAttachment(event)' onchange='zsRenderBrowseFileAttachment(this.value, this)'/>
+                                
+                                <div id='zsFileBrowseAttachments'></div>
+                                
+                                <div class="file-info">
+                                    <div id='zsMaxSizeMessage'>
+                                        Each file can be up to 20 MB in size.
+                                    </div>
+                                    <div id='zsMaxLimitMessage' style='display: none;'>
+                                        Puede adjuntar un máximo de 5 archivos a la vez.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+                        
+                        <!-- Form Buttons -->
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <button type="submit" id="zsSubmitButton_1095985000000458013" class="btn btn-primary me-2">Send</button>
+                                <button type="button" class="btn btn-secondary" onclick="zsResetWebForm('1095985000000458013')">Reset</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Footer -->
+                        <div class="form-footer mt-4">
+                            <span>desarrollado por</span>
+                            <a target='_blank' rel='noopener noreferrer' href='https://zoho.com/desk' class='ms-1'>
+                                <img src='https://d1ydxa2xvtn0b5.cloudfront.net/app/images/portalLogo.de847024ebc0131731a3.png' alt="Zoho" />
+                            </a>
+                        </div>
+                    </form>
+            </div>
+   
+        </div>
+    </div>
+    
+    <!-- Initialize Bootstrap JS at the end -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make the browse button work
+            document.getElementById('zsBrowseAttachment').addEventListener('click', function() {
+                document.getElementById('zsattachment_1').click();
+            });
+        });
+    </script>
+</body>
+</html>
