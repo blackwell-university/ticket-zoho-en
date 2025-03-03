@@ -204,7 +204,7 @@ html, body {
             if (mapDependancyLabels) {
                 for (var i = 0; i < mapDependancyLabels.length; i++) {
                     var label = mapDependancyLabels[i];
-                    var obj = document.forms['zsWebToCase_1095985000000458013'][label];
+                    var obj = document.forms['zsWebToCase_1095985000000458061'][label];
                     if (obj) {
                         setDependent(obj, true);
                     }
@@ -218,7 +218,7 @@ html, body {
                 zsRegenerateCaptcha();
             }
             setAllDependancyFieldsMapping();
-            document.getElementById('zsSubmitButton_1095985000000458013').removeAttribute('disabled');
+            document.getElementById('zsSubmitButton_1095985000000458061').removeAttribute('disabled');
             zsAttachedAttachmentsCount = 0;
             zsAttachmentFileBrowserIdsList = [1, 2, 3, 4, 5];
             jQuery('#zsFileBrowseAttachments').html('');
@@ -227,14 +227,14 @@ html, body {
         // Form Reset Function
         function zsResetWebForm(webFormId) {
             document.forms['zsWebToCase_' + webFormId].reset();
-            document.getElementById('zsSubmitButton_1095985000000458013').removeAttribute('disabled');
+            document.getElementById('zsSubmitButton_1095985000000458061').removeAttribute('disabled');
             setAllDependancyFieldsMapping();
             zsAttachedAttachmentsCount = 0;
             zsAttachmentFileBrowserIdsList = [1, 2, 3, 4, 5];
             jQuery('#zsFileBrowseAttachments').html('');
             zsCloudPickerJSON = {};
-            if (document.forms['zsWebToCase_1095985000000458013']['zsCloudPickerAttachments'] != undefined) {
-                document.forms['zsWebToCase_1095985000000458013']['zsCloudPickerAttachments'].value = JSON.stringify({});
+            if (document.forms['zsWebToCase_1095985000000458061']['zsCloudPickerAttachments'] != undefined) {
+                document.forms['zsWebToCase_1095985000000458061']['zsCloudPickerAttachments'].value = JSON.stringify({});
             }
             zsRearrangeFileBrowseAttachments();
             zsChangeMousePointer();
@@ -313,7 +313,7 @@ html, body {
             var isError = false;
             
             for(var i = 0; i < mandatoryFields.length; i++) {
-                var fieldObj = document.forms['zsWebToCase_1095985000000458013'][mandatoryFields[i]];
+                var fieldObj = document.forms['zsWebToCase_1095985000000458061'][mandatoryFields[i]];
                 if(fieldObj) {
                     if(fieldObj.value.trim() === '') {
                         alert(fieldLabels[mandatoryFields[i]] + ' no puede estar vacío');
@@ -325,7 +325,7 @@ html, body {
             }
             
             // Email validation
-            var emailObj = document.forms['zsWebToCase_1095985000000458013']['Email'];
+            var emailObj = document.forms['zsWebToCase_1095985000000458061']['Email'];
             if(emailObj && !isError) {
                 if(emailObj.value.trim() !== '' && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$/.test(emailObj.value))) {
                     alert('Por favor, introduce una dirección de Email válida');
@@ -352,7 +352,7 @@ html, body {
             </div>
              <!-- Columna del formulario -->
              <div class="col-md-8 form-container">
-                    <form name='zsWebToCase_1095985000000458013' id='zsWebToCase_1095985000000458013' 
+                    <form name='zsWebToCase_1095985000000458061' id='zsWebToCase_1095985000000458061' 
                           action='https://desk.zoho.com/support/WebToCase' method='POST' 
                           onSubmit='return zsValidateMandatoryFields()' enctype='multipart/form-data'>
                         
@@ -390,7 +390,7 @@ html, body {
                                 <input type="email" class="form-control" id="email" name="Email" maxlength="120" required>
                             </div>
                             <div class="col-md-5">
-                                <label for="phone" class="col-form-label">Número de teléfono</label>
+                                <label for="phone" class="col-form-label">Phone </label>
                                 <input type="tel" class="form-control" id="phone" name="Phone" maxlength="120">
                             </div>
                         </div>
@@ -434,28 +434,27 @@ html, body {
                         </div>
 
                         <!-- File Attachment Field -->
-<!-- File Attachment Field -->
-<div class="mb-3">
-    <label for="zsattachment_1" class="form-label">Attached</label>
-    <input type="file" class="form-control" id="zsattachment_1" name="attachment_1"
-           onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
-    
-    <input type="file" class="d-none" name="attachment_2" id="zsattachment_2"
-           onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
-    <input type="file" class="d-none" name="attachment_3" id="zsattachment_3"
-           onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
-    <input type="file" class="d-none" name="attachment_4" id="zsattachment_4"
-           onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
-    <input type="file" class="d-none" name="attachment_5" id="zsattachment_5"
-           onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
-
-    <div id="zsFileBrowseAttachments" class="mt-2"></div>
-    
-    <small class="text-muted">Each file can be up to 20 MB in size.</small>
-    <div id="zsMaxLimitMessage" class="text-danger" style="display: none;">
-        Puede adjuntar un máximo de 5 archivos a la vez.
-    </div>
-</div>
+                        <div class="mb-3">
+                            <label for="zsattachment_1" class="form-label">Attachments (optional)</label>
+                            <input type="file" class="form-control" id="zsattachment_1" name="attachment_1"
+                                   onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
+                            
+                            <input type="file" class="d-none" name="attachment_2" id="zsattachment_2"
+                                   onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
+                            <input type="file" class="d-none" name="attachment_3" id="zsattachment_3"
+                                   onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
+                            <input type="file" class="d-none" name="attachment_4" id="zsattachment_4"
+                                   onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
+                            <input type="file" class="d-none" name="attachment_5" id="zsattachment_5"
+                                   onclick="zsOpenFileBrowseAttachment(event)" onchange="zsRenderBrowseFileAttachment(this.value, this)">
+                        
+                            <div id="zsFileBrowseAttachments" class="mt-2"></div>
+                            
+                            <small class="text-muted">Each file can be up to 20 MB in size.</small>
+                            <div id="zsMaxLimitMessage" class="text-danger" style="display: none;">
+                                You can attach up to 5 files at a time.
+                            </div>
+                        </div>
 
 
                         
@@ -497,8 +496,8 @@ html, body {
                         <!-- Form Buttons -->
                         <div class="row mt-4">
                             <div class="col-12 text-center">
-                                <button type="submit" id="zsSubmitButton_1095985000000458013" class="btn btn-primary me-2">Send</button>
-                                <button type="button" class="btn btn-secondary" onclick="zsResetWebForm('1095985000000458013')">Reset</button>
+                                <button type="submit" id="zsSubmitButton_1095985000000458061" class="btn btn-primary me-2">Send</button>
+                                <button type="button" class="btn btn-secondary" onclick="zsResetWebForm('1095985000000458061')">Reset</button>
                             </div>
                         </div>
                         
